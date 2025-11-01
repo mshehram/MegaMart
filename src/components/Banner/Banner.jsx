@@ -2,7 +2,7 @@ import productBg from "../../Images/table.jpg";
 
 const Banner = ({ title }) => {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-[300px]"> 
       <img
         src={productBg}
         alt="Product-bg"
