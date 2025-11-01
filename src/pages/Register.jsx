@@ -47,7 +47,7 @@ const Register = () => {
     <section className="flex flex-col md:flex-row h-screen">
       {/* WELCOME SECTION */}
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-[#0f3460] text-white p-10 text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Meeega Mart</h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to Mega Mart</h1>
         <p className="text-lg text-gray-200 max-w-md">
           Discover premium products at unbeatable prices.  
           Sign up now and unlock exclusive deals and offers!
