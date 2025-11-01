@@ -6,9 +6,7 @@ const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
 
-  const validateEmail = (email) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePassword = (password) =>
     /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/.test(password);
 
@@ -28,7 +26,7 @@ const Register = () => {
 
     if (!validatePassword(form.password)) {
       setError(
-        "Password must be at least 8 characters, contain one uppercase letter and one special character."
+        "Password must be at least 8 characters, include one uppercase letter and one special character."
       );
       return;
     }
@@ -47,16 +45,16 @@ const Register = () => {
 
   return (
     <section className="flex flex-col md:flex-row h-screen">
-      {/* LEFT SIDE */}
-      <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-[#0f3460] text-white p-10">
+      {/* WELCOME SECTION */}
+      <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-[#0f3460] text-white p-10 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome to Meeega Mart</h1>
-        <p className="text-lg text-gray-200 text-center max-w-md">
-          Discover premium products at the best prices — all in one place.  
-          Sign up now and start shopping smarter!
+        <p className="text-lg text-gray-200 max-w-md">
+          Discover premium products at unbeatable prices.  
+          Sign up now and unlock exclusive deals and offers!
         </p>
       </div>
 
-      {/* RIGHT SIDE (FORM) */}
+      {/* REGISTER FORM */}
       <div className="flex items-center justify-center w-full md:w-1/2 bg-gray-100">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           <h2 className="text-2xl font-semibold text-center mb-6 text-[#0f3460]">
@@ -108,5 +106,3 @@ const Register = () => {
 };
 
 export default Register;
-
-

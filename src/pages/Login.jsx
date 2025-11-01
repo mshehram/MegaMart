@@ -33,16 +33,16 @@ const Login = () => {
 
   return (
     <section className="flex flex-col md:flex-row h-screen">
-      {/* LEFT SIDE */}
-      <div className="hidden md:flex flex-col justify-center items-center w-1/2 bg-[#0f3460] text-white p-10">
+      {/* WELCOME SECTION */}
+      <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-[#0f3460] text-white p-10 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome Back to Meeega Mart</h1>
-        <p className="text-lg text-gray-200 text-center max-w-md">
-          Log in to continue shopping the latest deals and exclusive offers  
-          specially curated for you.
+        <p className="text-lg text-gray-200 max-w-md">
+          Log in to continue shopping your favorite products  
+          and unlock personalized deals made just for you.
         </p>
       </div>
 
-      {/* RIGHT SIDE (FORM) */}
+      {/* LOGIN FORM */}
       <div className="flex items-center justify-center w-full md:w-1/2 bg-gray-100">
         <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-6 text-center text-[#0f3460]">
@@ -82,12 +82,8 @@ const Login = () => {
           </p>
         </div>
       </div>
-       <div></div>
     </section>
-   
   );
 };
 
 export default Login;
-
-
