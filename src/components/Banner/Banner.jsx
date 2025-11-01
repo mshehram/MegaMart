@@ -16,3 +16,5 @@ const Banner = ({ title }) => {
 };
 
 export default Banner;
+
+

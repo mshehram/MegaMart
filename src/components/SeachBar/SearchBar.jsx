@@ -30,3 +30,5 @@ const SearchBar = ({ setFilterList }) => {
 };
 
 export default SearchBar;
+
+

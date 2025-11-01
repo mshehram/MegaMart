@@ -24,3 +24,5 @@ const SlideCard = ({ title, desc, cover }) => {
 };
 
 export default SlideCard;
+
+

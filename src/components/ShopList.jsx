@@ -26,3 +26,5 @@ const ShopList = ({ productItems }) => {
 };
 
 export default memo(ShopList);
+
+

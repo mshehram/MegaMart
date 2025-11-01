@@ -67,3 +67,5 @@ export const cartMiddleware = (store) => (next) => (action) => {
 export const { addToCart, decreaseQty, deleteProduct } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+

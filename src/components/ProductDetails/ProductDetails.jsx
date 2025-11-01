@@ -66,3 +66,5 @@ const ProductDetails = ({ selectedProduct }) => {
 };
 
 export default ProductDetails;
+
+

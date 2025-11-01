@@ -23,3 +23,5 @@ const Section = ({ title, bgColor, productItems }) => {
 };
 
 export default Section;
+
+
