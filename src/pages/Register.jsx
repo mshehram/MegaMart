@@ -45,7 +45,7 @@ const Register = () => {
 
   return (
     <section className="flex flex-col md:flex-row h-screen">
-      {/* WELCOME SECTION */}
+     
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-[#0f3460] text-white p-10 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome to Mega Mart</h1>
         <p className="text-lg text-gray-200 max-w-md">
@@ -54,7 +54,6 @@ const Register = () => {
         </p>
       </div>
 
-      {/* REGISTER FORM */}
       <div className="flex items-center justify-center w-full md:w-1/2 bg-gray-100">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
           <h2 className="text-2xl font-semibold text-center mb-6 text-[#0f3460]">
