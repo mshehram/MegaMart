@@ -2,6 +2,8 @@ import { useState } from "react";
 
 const ProductReviews = ({ selectedProduct }) => {
   const [listSelected, setListSelected] = useState("desc");
+  const reviews = selectedProduct?.reviews || [];
+
   return (
     <section className="my-5">
       <div className="max-w-6xl mx-auto">
@@ -18,25 +20,26 @@ const ProductReviews = ({ selectedProduct }) => {
             style={{ color: listSelected === "rev" ? "black" : "#9c9b9b" }}
             onClick={() => setListSelected("rev")}
           >
-            Reviews ({selectedProduct?.reviews.length})
+            Reviews ({reviews.length})
           </li>
         </ul>
         {listSelected === "desc" ? (
-          <p className="text-[14px]">{selectedProduct?.description}</p>
+          <p className="text-[14px]">{selectedProduct?.description || "No description available."}</p>
         ) : (
           <div className="flex flex-col gap-1.5">
-            {selectedProduct?.reviews.map((rate) => (
-              <div
-                className="flex flex-col gap-1"
-                key={rate.rating}
-              >
-                <span>Jhon Doe</span>
-                <span className="text-[#ffcd4e] font-medium">
-                  {rate.rating} (rating)
-                </span>
-                <p>{rate.text}</p>
-              </div>
-            ))}
+            {reviews.length > 0 ? (
+              reviews.map((rate, index) => (
+                <div className="flex flex-col gap-1" key={index}>
+                  <span>{rate.name || "Anonymous"}</span>
+                  <span className="text-[#ffcd4e] font-medium">
+                    {rate.rating} (rating)
+                  </span>
+                  <p>{rate.text}</p>
+                </div>
+              ))
+            ) : (
+              <p>No reviews yet.</p>
+            )}
           </div>
         )}
       </div>
@@ -45,5 +48,3 @@ const ProductReviews = ({ selectedProduct }) => {
 };
 
 export default ProductReviews;
-
-

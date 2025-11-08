@@ -19,6 +19,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Product = lazy(() => import("./pages/Product"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 function Layout() {
   const { user } = useAuth();
@@ -30,6 +31,10 @@ function Layout() {
     return <Navigate to="/login" />;
   }
 
+  if (user === "admin@meegamart.com" && location.pathname === "/login") {
+    return <Navigate to="/admin" />;
+  }
+
   return (
     <>
       {!hideLayout && <NavBar />}
@@ -39,6 +44,7 @@ function Layout() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
@@ -70,5 +76,3 @@ function App() {
 }
 
 export default App;
-
-

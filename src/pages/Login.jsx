@@ -8,12 +8,26 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+  const ADMIN = {
+    email: "admin@meegamart.com",
+    password: "Admin@123",
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
     if (!form.email.trim() || !form.password.trim()) {
       setError("Both fields are required.");
+      return;
+    }
+
+    if (
+      form.email === ADMIN.email &&
+      form.password === ADMIN.password
+    ) {
+      login(form.email, true);
+      navigate("/admin");
       return;
     }
 
@@ -27,18 +41,16 @@ const Login = () => {
       return;
     }
 
-    login(form.email);
+    login(form.email, false);
     navigate("/");
   };
 
   return (
     <section className="flex flex-col md:flex-row h-screen">
-    
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 bg-[#0f3460] text-white p-10 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome Back to Mega Mart</h1>
         <p className="text-lg text-gray-200 max-w-md">
-          Log in to continue shopping your favorite products  
-          and unlock personalized deals made just for you.
+          Log in to continue shopping your favorite products and unlock personalized deals made just for you.
         </p>
       </div>
 

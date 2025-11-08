@@ -18,7 +18,10 @@ const ShopList = ({ productItems }) => {
         <ProductCard
           key={productItem.id}
           title={null}
-          productItem={productItem}
+          productItem={{
+            ...productItem,
+            imgUrl: productItem.imgUrl || productItem.image || productItem.file,
+          }}
         />
       ))}
     </div>
@@ -26,5 +29,3 @@ const ShopList = ({ productItems }) => {
 };
 
 export default memo(ShopList);
-
-
