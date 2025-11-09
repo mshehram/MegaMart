@@ -2,15 +2,13 @@ import phone08 from "../Images/phone-08.png";
 import sofaSlide from "../Images/hero-img.png";
 import wireless01 from "../Images/wireless-01.png";
 import watchSlide from "../Images/watch-07.png";
+
 export const products = JSON.parse(localStorage.getItem("adminProducts")) || [];
 
-export const shopProducts = products.filter(
-  (item) => item.section === "shop" || !item.section
-);
-
-export const discountProducts = products.filter(
-  (item) => item.section === "discount"
-);
+export const shopProducts = products.filter((item) => item.section === "shop");
+export const discountProducts = products.filter((item) => item.section === "big discount");
+export const newArrivals = products.filter((item) => item.section === "new arrivals");
+export const bestSales = products.filter((item) => item.section === "best sales");
 
 export const serviceData = [
   {
@@ -40,28 +38,8 @@ export const serviceData = [
 ];
 
 export const SliderData = [
-  {
-      id: 1,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: sofaSlide,
-  },
-  {
-      id: 2,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: phone08,
-  },
-  {
-      id: 3,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: wireless01,
-  },
-  {
-      id: 4,
-      title: "50% Off For Your First Shopping",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.",
-      cover: watchSlide,
-  },
+  { id: 1, title: "50% Off For Your First Shopping", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.", cover: sofaSlide },
+  { id: 2, title: "50% Off For Your First Shopping", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.", cover: phone08 },
+  { id: 3, title: "50% Off For Your First Shopping", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.", cover: wireless01 },
+  { id: 4, title: "50% Off For Your First Shopping", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convallis.", cover: watchSlide },
 ];

@@ -1,17 +1,15 @@
 import { Fragment } from "react";
 import Wrapper from "../components/wrapper/Wrapper";
 import Section from "../components/Section";
-import { shopProducts, discountProducts } from "../utils/products";
+import {
+  discountProducts,
+  newArrivals,
+  bestSales,
+} from "../utils/products";
 import SliderHome from "../components/Slider";
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
 
 const Home = () => {
-  const newArrivalData = shopProducts.filter(
-    (item) => item.category === "mobile" || item.category === "wireless"
-  );
-
-  const bestSales = shopProducts.filter((item) => item.category === "sofa");
-
   useWindowScrollToTop();
 
   return (
@@ -40,7 +38,7 @@ const Home = () => {
             <Section
               title="New Arrivals"
               bgColor="white"
-              productItems={newArrivalData}
+              productItems={newArrivals}
             />
           </div>
         </div>

@@ -43,21 +43,21 @@ const AdminDashboard = () => {
       return;
     }
 
-    const newProduct = {
-      id: Date.now(),
+    const sections = ["shop"];
+    if (form.section && form.section !== "shop") sections.push(form.section.toLowerCase());
+
+    const newProducts = sections.map((sec) => ({
+      id: Date.now() + Math.random(),
       productName: form.name,
       description: form.description,
       category: form.category.toLowerCase(),
-      section: form.section.toLowerCase(),
+      section: sec,
       imgUrl: form.file,
       price: form.price,
-      discount:
-        form.section.toLowerCase() === "big discount"
-          ? form.discount || "0"
-          : "0",
-    };
+      discount: sec === "big discount" ? form.discount || "0" : "0",
+    }));
 
-    const updatedProducts = [...products, newProduct];
+    const updatedProducts = [...products, ...newProducts];
     setProducts(updatedProducts);
     localStorage.setItem("adminProducts", JSON.stringify(updatedProducts));
 
@@ -110,18 +110,14 @@ const AdminDashboard = () => {
                 rows="2"
                 className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none resize-none"
                 value={form.description}
-                onChange={(e) =>
-                  setForm({ ...form, description: e.target.value })
-                }
+                onChange={(e) => setForm({ ...form, description: e.target.value })}
               />
 
               <div className="grid grid-cols-2 gap-3">
                 <select
                   className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
                   value={form.category}
-                  onChange={(e) =>
-                    setForm({ ...form, category: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, category: e.target.value })}
                 >
                   <option value="">Select Category</option>
                   <option value="sofa">Sofa</option>
@@ -134,9 +130,7 @@ const AdminDashboard = () => {
                 <select
                   className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
                   value={form.section}
-                  onChange={(e) =>
-                    setForm({ ...form, section: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, section: e.target.value })}
                 >
                   <option value="">Select Section</option>
                   <option value="shop">Shop</option>
@@ -152,9 +146,7 @@ const AdminDashboard = () => {
                   placeholder="Price"
                   className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
                   value={form.price}
-                  onChange={(e) =>
-                    setForm({ ...form, price: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
                 />
 
                 {form.section === "big discount" && (
@@ -163,9 +155,7 @@ const AdminDashboard = () => {
                     placeholder="Discount %"
                     className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
                     value={form.discount}
-                    onChange={(e) =>
-                      setForm({ ...form, discount: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, discount: e.target.value })}
                   />
                 )}
               </div>
@@ -213,9 +203,7 @@ const AdminDashboard = () => {
                           {item.productName}
                         </h3>
                         <div className="text-right">
-                          <p className="text-[#0f3460] font-bold">
-                            ${item.price}
-                          </p>
+                          <p className="text-[#0f3460] font-bold">${item.price}</p>
                           {item.discount > 0 && (
                             <p className="text-red-500 text-sm">-{item.discount}%</p>
                           )}
