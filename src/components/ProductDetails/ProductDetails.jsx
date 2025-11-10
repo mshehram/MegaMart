@@ -44,21 +44,23 @@ const ProductDetails = ({ selectedProduct }) => {
             <span>category: {selectedProduct?.category}</span>
           </div>
           <p className="text-[14px] my-5">{selectedProduct?.shortDesc}</p>
-          <input
-            type="number"
-            placeholder="Qty"
-            value={quantity}
-            onChange={handleQuantityChange}
-            className="w-[80px] h-[20px] border border-black rounded-md p-4 my-5 text-black text-[15px]"
-          />
-          <button
-            aria-label="Add"
-            type="submit"
-            onClick={() => handelAdd(selectedProduct, quantity)}
-            className="px-4 py-2 bg-[#0f3460] text-white text-[17px] rounded-md"
-          >
-            Add To Cart
-          </button>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 my-5">
+            <input
+              type="number"
+              placeholder="Qty"
+              value={quantity}
+              onChange={handleQuantityChange}
+              className="w-[80px] h-[36px] border border-black rounded-md p-2 text-black text-[15px]"
+            />
+            <button
+              aria-label="Add"
+              type="submit"
+              onClick={() => handelAdd(selectedProduct, quantity)}
+              className="h-[40px] px-6 bg-[#0f3460] text-white text-[17px] rounded-md"
+            >
+              Add To Cart
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -66,5 +68,3 @@ const ProductDetails = ({ selectedProduct }) => {
 };
 
 export default ProductDetails;
-
-

@@ -25,13 +25,13 @@ const NavBar = () => {
         isFixed ? "fixed top-0 left-0 w-screen" : "relative"
       } bg-white shadow-[0_10px_10px_rgba(9,5,29,0.171)] text-[1.2rem] transition-all duration-300 z-50`}
     >
-      <div className="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
-        <Link to="/" className="flex items-center justify-center gap-2">
+      <div className="max-w-[78rem] mx-auto flex justify-between items-center px-4 py-3">
+        
+        <Link to="/" className="flex items-center justify-start gap-2">
           <ion-icon name="bag"></ion-icon>
           <h1 className="text-black text-[25px] font-medium m-0">MegaMart</h1>
         </Link>
 
-       
         <div className="hidden sm:flex items-center gap-6">
           <ul className="flex items-center gap-4 text-[18px] font-semibold">
             <li>
@@ -50,10 +50,11 @@ const NavBar = () => {
                 Shop
               </Link>
             </li>
-           
           </ul>
 
-          <div className="flex items-end gap-2">
+          
+          <div className="flex items-end gap-2 ml-auto">
+         
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -85,7 +86,6 @@ const NavBar = () => {
           </div>
         </div>
 
-
         <button
           onClick={() => setExpand(!expand)}
           className="flex flex-col justify-center items-center space-y-1 sm:hidden"
@@ -108,6 +108,7 @@ const NavBar = () => {
         </button>
       </div>
 
+  
       {expand && (
         <div className="sm:hidden px-4 pb-4">
           <ul className="flex flex-col gap-2 text-[18px] font-semibold">
@@ -167,5 +168,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-

@@ -11,7 +11,9 @@ const options = [
 
 const FilterSelect = ({ setFilterList }) => {
   const handleChange = (selectedOption) => {
-    setFilterList(products.filter((item) => item.category === selectedOption.value));
+    setFilterList(
+      products.filter((item) => item.category === selectedOption.value)
+    );
   };
 
   return (
@@ -20,21 +22,59 @@ const FilterSelect = ({ setFilterList }) => {
         options={options}
         defaultValue={{ value: "", label: "Filter By Category" }}
         onChange={handleChange}
-        classNames={{
-          control: () =>
-            "bg-[#0f3460] text-white rounded-md border-none shadow-none h-[40px] cursor-pointer",
-          singleValue: () => "text-white",
-          option: (state) =>
-            `text-[#0f3460] hover:bg-[#0f3460] hover:text-white ${
-              state.isSelected ? "bg-[#0f3460] text-white" : "bg-white"
-            }`,
+        classNamePrefix="custom-select"
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            backgroundColor: "#0f3460",
+            border: "none",
+            borderRadius: "0.375rem",
+            height: "40px",
+            cursor: "pointer",
+            boxShadow: "none",
+          }),
+          singleValue: (provided) => ({
+            ...provided,
+            color: "white",
+          }),
+          placeholder: (provided) => ({
+            ...provided,
+            color: "white",
+          }),
+          dropdownIndicator: (provided) => ({
+            ...provided,
+            color: "white",
+            ':hover': {
+              color: "white",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected
+              ? "#0f3460"
+              : state.isFocused
+              ? "#dbe4f5"
+              : "white",
+            color: state.isSelected
+              ? "white"
+              : state.isFocused
+              ? "#0f3460"
+              : "#0f3460",
+            cursor: "pointer",
+            transition: "background-color 0.2s, color 0.2s",
+          }),
+          menu: (provided) => ({
+            ...provided,
+            borderRadius: "0.375rem",
+            overflow: "hidden",
+          }),
         }}
         theme={(theme) => ({
           ...theme,
           borderRadius: 5,
           colors: {
             ...theme.colors,
-            primary25: "#0f3460",
+            primary25: "#dbe4f5",
             primary: "#0f3460",
           },
         })}
@@ -44,5 +84,3 @@ const FilterSelect = ({ setFilterList }) => {
 };
 
 export default FilterSelect;
-
-
