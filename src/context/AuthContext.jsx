@@ -11,13 +11,10 @@ export const AuthProvider = ({ children }) => {
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
-  const login = (email) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const exist = users.find((u) => u.email === email);
-    if (exist) {
-      setUser(exist);
-      localStorage.setItem("loggedUser", JSON.stringify(exist));
-    }
+  // Updated login to accept a user object {email, role}
+  const login = (userObj) => {
+    setUser(userObj);
+    localStorage.setItem("loggedUser", JSON.stringify(userObj));
   };
 
   const logout = () => {

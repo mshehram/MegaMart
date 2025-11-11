@@ -1,7 +1,7 @@
 import Select from "react-select";
-import { products } from "../utils/products";
 
 const options = [
+  { value: "", label: "All Categories" },
   { value: "sofa", label: "Sofa" },
   { value: "chair", label: "Chair" },
   { value: "watch", label: "Watch" },
@@ -9,18 +9,16 @@ const options = [
   { value: "wireless", label: "Wireless" },
 ];
 
-const FilterSelect = ({ setFilterList }) => {
+const FilterSelect = ({ selectedCategory, setSelectedCategory }) => {
   const handleChange = (selectedOption) => {
-    setFilterList(
-      products.filter((item) => item.category === selectedOption.value)
-    );
+    setSelectedCategory(selectedOption.value);
   };
 
   return (
     <div className="w-[200px] h-[40px]">
       <Select
         options={options}
-        defaultValue={{ value: "", label: "Filter By Category" }}
+        value={options.find((opt) => opt.value === selectedCategory)}
         onChange={handleChange}
         classNamePrefix="custom-select"
         styles={{
@@ -33,21 +31,9 @@ const FilterSelect = ({ setFilterList }) => {
             cursor: "pointer",
             boxShadow: "none",
           }),
-          singleValue: (provided) => ({
-            ...provided,
-            color: "white",
-          }),
-          placeholder: (provided) => ({
-            ...provided,
-            color: "white",
-          }),
-          dropdownIndicator: (provided) => ({
-            ...provided,
-            color: "white",
-            ':hover': {
-              color: "white",
-            },
-          }),
+          singleValue: (provided) => ({ ...provided, color: "white" }),
+          placeholder: (provided) => ({ ...provided, color: "white" }),
+          dropdownIndicator: (provided) => ({ ...provided, color: "white" }),
           option: (provided, state) => ({
             ...provided,
             backgroundColor: state.isSelected
@@ -61,22 +47,13 @@ const FilterSelect = ({ setFilterList }) => {
               ? "#0f3460"
               : "#0f3460",
             cursor: "pointer",
-            transition: "background-color 0.2s, color 0.2s",
           }),
-          menu: (provided) => ({
-            ...provided,
-            borderRadius: "0.375rem",
-            overflow: "hidden",
-          }),
+          menu: (provided) => ({ ...provided, borderRadius: "0.375rem" }),
         }}
         theme={(theme) => ({
           ...theme,
           borderRadius: 5,
-          colors: {
-            ...theme.colors,
-            primary25: "#dbe4f5",
-            primary: "#0f3460",
-          },
+          colors: { ...theme.colors, primary25: "#dbe4f5", primary: "#0f3460" },
         })}
       />
     </div>

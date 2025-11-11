@@ -1,10 +1,8 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import ProductCard from "./ProductCard/ProductCard";
 
 const ShopList = ({ productItems }) => {
-  useEffect(() => {}, [productItems]);
-
-  if (productItems.length === 0) {
+  if (!productItems || productItems.length === 0) {
     return (
       <h1 className="text-center text-2xl font-semibold text-gray-700 my-10">
         Product Not Found !!
@@ -13,17 +11,18 @@ const ShopList = ({ productItems }) => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-6">
-      {productItems.map((productItem) => (
-        <ProductCard
-          key={productItem.id}
-          title={null}
-          productItem={{
-            ...productItem,
-            imgUrl: productItem.imgUrl || productItem.image || productItem.file,
-          }}
-        />
-      ))}
+    <div className="flex justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {productItems.map((productItem) => (
+          <ProductCard
+            key={productItem.id}
+            productItem={{
+              ...productItem,
+              imgUrl: productItem.imgUrl || productItem.image || productItem.file || "/placeholder.png",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
