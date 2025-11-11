@@ -1,20 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Wrapper from "../components/wrapper/Wrapper";
 import Section from "../components/Section";
-import {
-  discountProducts,
-  newArrivals,
-  bestSales,
-} from "../utils/products";
 import SliderHome from "../components/Slider";
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
 
 const Home = () => {
   useWindowScrollToTop();
 
+  const [bigDiscountProducts, setBigDiscountProducts] = useState([]);
+  const [newArrivalProducts, setNewArrivalProducts] = useState([]);
+  const [bestSalesProducts, setBestSalesProducts] = useState([]);
+
+  useEffect(() => {
+    const savedProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
+    setBigDiscountProducts(savedProducts.filter((p) => p.section === "big discount"));
+    setNewArrivalProducts(savedProducts.filter((p) => p.section === "new arrivals"));
+    setBestSalesProducts(savedProducts.filter((p) => p.section === "best sales"));
+  }, []);
+
   return (
     <Fragment>
-      <div className="bg-white w-full min-h-screen">
+      <div className="bg-white w-full min-h-screen overflow-x-hidden">
         <div className="w-full">
           <SliderHome />
         </div>
@@ -28,7 +34,7 @@ const Home = () => {
             <Section
               title="Big Discount"
               bgColor="#f6f9fc"
-              productItems={discountProducts}
+              productItems={bigDiscountProducts}
             />
           </div>
         </div>
@@ -38,7 +44,7 @@ const Home = () => {
             <Section
               title="New Arrivals"
               bgColor="white"
-              productItems={newArrivals}
+              productItems={newArrivalProducts}
             />
           </div>
         </div>
@@ -48,7 +54,7 @@ const Home = () => {
             <Section
               title="Best Sales"
               bgColor="#f6f9fc"
-              productItems={bestSales}
+              productItems={bestSalesProducts}
             />
           </div>
         </div>

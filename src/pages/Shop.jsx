@@ -12,9 +12,16 @@ const Shop = () => {
   useWindowScrollToTop();
 
   useEffect(() => {
-    const adminProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
-    setAllProducts(adminProducts);
-    setFilterList(adminProducts.filter((item) => item.category === "sofa"));
+    const loadProducts = () => {
+      const adminProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
+      setAllProducts(adminProducts);
+      setFilterList(adminProducts.filter((item) => item.category === "sofa"));
+    };
+
+    loadProducts();
+
+    window.addEventListener("storage", loadProducts);
+    return () => window.removeEventListener("storage", loadProducts);
   }, []);
 
   return (

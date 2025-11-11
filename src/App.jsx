@@ -1,11 +1,5 @@
 import { lazy, Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Loader from "./components/Loader/Loader";
@@ -24,16 +18,9 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 function Layout() {
   const { user } = useAuth();
   const location = useLocation();
-  const hideLayout =
-    location.pathname === "/login" || location.pathname === "/register";
+  const hideLayout = location.pathname === "/login" || location.pathname === "/register";
 
-  if (!user && !hideLayout) {
-    return <Navigate to="/login" />;
-  }
-
-  if (user === "admin@meegamart.com" && location.pathname === "/login") {
-    return <Navigate to="/admin" />;
-  }
+  if (user?.email === "admin@meegamart.com" && location.pathname === "/login") return <Navigate to="/admin" />;
 
   return (
     <>
@@ -58,17 +45,7 @@ function App() {
   return (
     <Suspense fallback={<Loader />}>
       <Router>
-        <ToastContainer
-          position="top-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        <ToastContainer position="top-right" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover theme="light" />
         <Layout />
       </Router>
     </Suspense>
