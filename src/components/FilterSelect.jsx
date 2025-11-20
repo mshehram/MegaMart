@@ -1,15 +1,21 @@
 import Select from "react-select";
 
-const options = [
-  { value: "", label: "All Categories" },
-  { value: "sofa", label: "Sofa" },
-  { value: "chair", label: "Chair" },
-  { value: "watch", label: "Watch" },
-  { value: "mobile", label: "Mobile" },
-  { value: "wireless", label: "Wireless" },
-];
+const FilterSelect = ({ selectedCategory, setSelectedCategory, products }) => {
 
-const FilterSelect = ({ selectedCategory, setSelectedCategory }) => {
+  // Unique categories extract from admin products
+  const uniqueCategories = [
+    ...new Set(products.map((item) => item.category))
+  ];
+
+  // Create dynamic options list
+  const options = [
+    { value: "", label: "All Categories" },
+    ...uniqueCategories.map((cat) => ({
+      value: cat,
+      label: cat.charAt(0).toUpperCase() + cat.slice(1)
+    }))
+  ];
+
   const handleChange = (selectedOption) => {
     setSelectedCategory(selectedOption.value);
   };

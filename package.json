@@ -12,6 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@reduxjs/toolkit": "^2.9.2",
+    "express": "^5.1.0",
     "ionicons": "^8.0.13",
     "lucide-react": "^0.553.0",
     "react": "^19.1.1",

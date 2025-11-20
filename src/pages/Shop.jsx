@@ -19,32 +19,37 @@ const Shop = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      setFilterList(
-        allProducts.filter((item) => item.category === selectedCategory)
-      );
+      setFilterList(allProducts.filter((item) => item.category === selectedCategory));
     } else {
-      setFilterList([]);
+      setFilterList(allProducts);
     }
   }, [allProducts, selectedCategory]);
 
   return (
     <Fragment>
       <Banner title="Products" />
+
       <section className="filter-bar bg-white py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
+            
             <div className="w-full md:w-1/3">
-              <FilterSelect
+              <FilterSelect 
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
                 products={allProducts}
               />
             </div>
+
             <div className="w-full md:w-2/3">
               <SearchBar setFilterList={setFilterList} products={allProducts} />
             </div>
+
           </div>
+
           <ShopList productItems={filterList} />
+
         </div>
       </section>
     </Fragment>

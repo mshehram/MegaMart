@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -12,11 +15,35 @@ const AdminDashboard = () => {
     file: null,
   });
 
+  // LOAD FROM LOCAL STORAGE
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("adminProducts")) || [];
+    const savedCat = JSON.parse(localStorage.getItem("adminCategories")) || [];
+
     setProducts(saved);
+
+    // If no categories found, set empty
+    setCategories(savedCat.length > 0 ? savedCat : []);
   }, []);
 
+  // ADD NEW CATEGORY
+  const addCategory = () => {
+    if (!newCategory.trim()) return alert("Category name likho!");
+
+    const newCat = newCategory.toLowerCase();
+
+    if (categories.includes(newCat)) {
+      alert("Category already exist!");
+      return;
+    }
+
+    const updated = [...categories, newCat];
+    setCategories(updated);
+    localStorage.setItem("adminCategories", JSON.stringify(updated));
+    setNewCategory("");
+  };
+
+  // IMAGE → BASE64
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -28,6 +55,7 @@ const AdminDashboard = () => {
     }
   };
 
+  // UPLOAD PRODUCT
   const handleUpload = (e) => {
     e.preventDefault();
 
@@ -39,12 +67,14 @@ const AdminDashboard = () => {
       !form.price.trim() ||
       !form.file
     ) {
-      alert("Please fill all required fields before uploading.");
+      alert("Please fill all fields!");
       return;
     }
 
     const sections = ["shop"];
-    if (form.section && form.section !== "shop") sections.push(form.section.toLowerCase());
+    if (form.section !== "shop") {
+      sections.push(form.section.toLowerCase());
+    }
 
     const newProducts = sections.map((sec) => ({
       id: Date.now() + Math.random(),
@@ -58,6 +88,7 @@ const AdminDashboard = () => {
     }));
 
     const updatedProducts = [...products, ...newProducts];
+
     setProducts(updatedProducts);
     localStorage.setItem("adminProducts", JSON.stringify(updatedProducts));
 
@@ -72,6 +103,7 @@ const AdminDashboard = () => {
     });
   };
 
+  // DELETE PRODUCT
   const handleDelete = (id) => {
     const updated = products.filter((item) => item.id !== id);
     setProducts(updated);
@@ -86,21 +118,40 @@ const AdminDashboard = () => {
             Admin Dashboard
           </h1>
           <span className="text-gray-500 text-sm">
-            Manage your store products efficiently
+            Manage your store products & categories
           </span>
         </header>
 
         <div className="grid lg:grid-cols-3 gap-8">
+          {/* LEFT SIDE — ADD PRODUCT */}
           <div className="bg-white shadow-lg rounded-2xl border border-gray-200 p-6 lg:col-span-1">
             <h2 className="text-2xl font-semibold text-[#0f3460] mb-6">
               Add New Product
             </h2>
 
+            {/* NEW CATEGORY INPUT */}
+            <div className="flex gap-2 mb-4">
+              <input
+                type="text"
+                placeholder="Add Category"
+                className="border border-gray-300 p-3 rounded-lg w-full"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+              />
+              <button
+                onClick={addCategory}
+                className="bg-[#0f3460] text-white px-4 rounded-lg"
+              >
+                Add
+              </button>
+            </div>
+
+            {/* PRODUCT FORM */}
             <form onSubmit={handleUpload} className="space-y-4">
               <input
                 type="text"
                 placeholder="Product Name"
-                className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
+                className="w-full border border-gray-300 p-3 rounded-lg"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
@@ -108,29 +159,37 @@ const AdminDashboard = () => {
               <textarea
                 placeholder="Description"
                 rows="2"
-                className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none resize-none"
+                className="w-full border border-gray-300 p-3 rounded-lg"
                 value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, description: e.target.value })
+                }
               />
 
               <div className="grid grid-cols-2 gap-3">
+                {/* DYNAMIC CATEGORY SELECT */}
                 <select
-                  className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
+                  className="border border-gray-300 p-3 rounded-lg"
                   value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, category: e.target.value })
+                  }
                 >
                   <option value="">Select Category</option>
-                  <option value="sofa">Sofa</option>
-                  <option value="chair">Chair</option>
-                  <option value="mobile">Mobile</option>
-                  <option value="wireless">Wireless</option>
-                  <option value="watch">Watch</option>
+
+                  {categories.map((c, i) => (
+                    <option key={i} value={c}>
+                      {c}
+                    </option>
+                  ))}
                 </select>
 
                 <select
-                  className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
+                  className="border border-gray-300 p-3 rounded-lg"
                   value={form.section}
-                  onChange={(e) => setForm({ ...form, section: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, section: e.target.value })
+                  }
                 >
                   <option value="">Select Section</option>
                   <option value="shop">Shop</option>
@@ -144,18 +203,22 @@ const AdminDashboard = () => {
                 <input
                   type="number"
                   placeholder="Price"
-                  className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
+                  className="border border-gray-300 p-3 rounded-lg"
                   value={form.price}
-                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, price: e.target.value })
+                  }
                 />
 
                 {form.section === "big discount" && (
                   <input
                     type="number"
                     placeholder="Discount %"
-                    className="border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-[#0f3460] outline-none"
+                    className="border border-gray-300 p-3 rounded-lg"
                     value={form.discount}
-                    onChange={(e) => setForm({ ...form, discount: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, discount: e.target.value })
+                    }
                   />
                 )}
               </div>
@@ -164,18 +227,19 @@ const AdminDashboard = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="border border-gray-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-[#0f3460] outline-none"
+                className="border border-gray-300 p-3 rounded-lg w-full"
               />
 
               <button
                 type="submit"
-                className="w-full bg-[#0f3460] hover:bg-[#162a4d] text-white font-semibold py-3 rounded-lg shadow-md transition"
+                className="w-full bg-[#0f3460] text-white font-semibold py-3 rounded-lg"
               >
                 Upload Product
               </button>
             </form>
           </div>
 
+          {/* RIGHT SIDE — PRODUCT LIST */}
           <div className="lg:col-span-2 bg-white shadow-lg rounded-2xl border border-gray-200 p-6">
             <h2 className="text-2xl font-semibold text-[#0f3460] mb-6">
               Product List
@@ -205,7 +269,9 @@ const AdminDashboard = () => {
                         <div className="text-right">
                           <p className="text-[#0f3460] font-bold">${item.price}</p>
                           {item.discount > 0 && (
-                            <p className="text-red-500 text-sm">-{item.discount}%</p>
+                            <p className="text-red-500 text-sm">
+                              -{item.discount}%
+                            </p>
                           )}
                         </div>
                       </div>
