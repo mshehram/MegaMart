@@ -9,25 +9,22 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Admin credentials
   const ADMIN = { email: "admin@meegamart.com", password: "Admin@123" };
 
   const onSubmit = (data) => {
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Admin login
     if (data.email === ADMIN.email && data.password === ADMIN.password) {
-      login({ email: data.email, role: "admin" }); // save admin user object
-      navigate("/admin"); // redirect to admin dashboard
+      login({ email: data.email, role: "admin" }); 
+      navigate("/admin");
       return;
     }
 
-    // Regular user login
     const exist = users.find((u) => u.email === data.email && u.password === data.password);
     if (!exist) return alert("Invalid email or password.");
 
-    login({ email: data.email, role: "user" }); // save regular user
-    navigate("/"); // redirect to shop
+    login({ email: data.email, role: "user" }); 
+    navigate("/"); 
   };
 
   return (
@@ -41,7 +38,7 @@ const Login = () => {
         <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-semibold mb-6 text-center text-[#0f3460]">Login</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email field */}
+         
             <div className="relative">
               <input 
                 type="email" 
@@ -55,7 +52,6 @@ const Login = () => {
               {errors.email && <p className="text-red-500 text-sm mt-1">Email is required</p>}
             </div>
 
-            {/* Password field */}
             <div className="relative">
               <input 
                 type={showPassword ? "text" : "password"} 
@@ -85,7 +81,7 @@ const Login = () => {
           </form>
 
           <p className="text-sm text-center mt-4">
-            Don’t have an account? 
+            Dont have an account? 
             <span className="text-[#0f3460] font-semibold cursor-pointer" onClick={() => navigate("/register")}>
               Register
             </span>
