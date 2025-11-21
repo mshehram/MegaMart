@@ -42,6 +42,13 @@ const NavBar = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    setProfileData({ email: "", name: "", role: "user" }); // reset to hide Dashboard
+    setProfileOpen(false);
+    setExpand(false);
+  };
+
   return (
     <nav className={`${isFixed ? "fixed top-0 left-0 w-screen" : "relative"} bg-white shadow-md transition-all duration-300 z-50`}>
       <div className="max-w-[78rem] mx-auto flex justify-between items-center px-4 py-3">
@@ -63,7 +70,7 @@ const NavBar = () => {
             )}
           </Link>
 
-          {/* Dashboard link like other buttons */}
+          {/* Dashboard only for admin */}
           {profileData.role === "admin" && (
             <Link to="/admin" className="text-black px-2 py-1">Dashboard</Link>
           )}
@@ -84,7 +91,10 @@ const NavBar = () => {
                     <p className="font-medium">{profileData.name}</p>
                     <p className="text-sm text-gray-500">{profileData.email}</p>
                   </div>
-                  <button onClick={() => { logout(); setProfileOpen(false); }} className="w-full text-left px-4 py-2 text-white bg-[#0f3460] hover:bg-[#162a4d] rounded-b-md">
+                  <button 
+                    onClick={handleLogout} 
+                    className="w-full text-left px-4 py-2 text-white bg-[#0f3460] hover:bg-[#162a4d] rounded-b-md"
+                  >
                     Logout
                   </button>
                 </div>
@@ -126,7 +136,10 @@ const NavBar = () => {
                     <p className="font-medium">{profileData.name}</p>
                     <p className="text-sm text-gray-500">{profileData.email}</p>
                   </div>
-                  <button onClick={() => { logout(); setProfileOpen(false); setExpand(false); }} className="w-full text-left px-4 py-2 text-white bg-[#0f3460] hover:bg-[#162a4d] rounded-b-md">
+                  <button 
+                    onClick={handleLogout} 
+                    className="w-full text-left px-4 py-2 text-white bg-[#0f3460] hover:bg-[#162a4d] rounded-b-md"
+                  >
                     Logout
                   </button>
                 </div>
