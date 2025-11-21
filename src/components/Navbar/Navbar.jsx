@@ -11,7 +11,7 @@ const NavBar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [profileData, setProfileData] = useState({ email: "", name: "" });
+  const [profileData, setProfileData] = useState({ email: "", name: "", role: "user" });
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -24,7 +24,12 @@ const NavBar = () => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("loggedUser"));
-    if (storedUser) setProfileData({ email: storedUser.email, name: storedUser.name || storedUser.email });
+    if (storedUser)
+      setProfileData({
+        email: storedUser.email,
+        name: storedUser.name || storedUser.email,
+        role: storedUser.role || "user",
+      });
   }, [user]);
 
   const handleProtectedClick = (e, path) => {
@@ -44,6 +49,8 @@ const NavBar = () => {
           <ion-icon name="bag"></ion-icon>
           <h1 className="text-black text-2xl font-medium">MegaMart</h1>
         </Link>
+
+        {/* Desktop Menu */}
         <div className="hidden sm:flex items-center gap-6">
           <Link to="/" className="text-black px-2 py-1">Home</Link>
           <Link to="/shop" onClick={(e) => handleProtectedClick(e, "/shop")} className="text-black px-2 py-1">Shop</Link>
@@ -55,6 +62,12 @@ const NavBar = () => {
               </span>
             )}
           </Link>
+
+          {/* Dashboard link like other buttons */}
+          {profileData.role === "admin" && (
+            <Link to="/admin" className="text-black px-2 py-1">Dashboard</Link>
+          )}
+
           {!user ? (
             <button onClick={() => navigate("/login")} className="bg-[#0f3460] text-white px-3 py-1 rounded">Login</button>
           ) : (
@@ -79,15 +92,24 @@ const NavBar = () => {
             </div>
           )}
         </div>
+
+        {/* Mobile Menu Button */}
         <button className="sm:hidden text-black text-2xl" onClick={() => setExpand(!expand)}>
           {expand ? <ion-icon name="close"></ion-icon> : <ion-icon name="menu"></ion-icon>}
         </button>
       </div>
+
+      {/* Mobile Menu */}
       {expand && (
         <div className="sm:hidden flex flex-col bg-white shadow-md px-4 pb-4 gap-2">
           <Link to="/" onClick={() => setExpand(false)} className="text-black">Home</Link>
           <Link to="/shop" onClick={(e) => { handleProtectedClick(e, "/shop"); setExpand(false); }} className="text-black">Shop</Link>
           <Link to="/cart" onClick={(e) => { handleProtectedClick(e, "/cart"); setExpand(false); }} className="text-black">Cart ({cartList.length})</Link>
+
+          {profileData.role === "admin" && (
+            <Link to="/admin" onClick={() => setExpand(false)} className="text-black">Dashboard</Link>
+          )}
+
           {!user ? (
             <button onClick={() => { navigate("/login"); setExpand(false); }} className="bg-[#0f3460] text-white px-3 py-1 rounded mt-2">Login</button>
           ) : (
